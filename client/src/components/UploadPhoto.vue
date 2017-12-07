@@ -16,7 +16,7 @@ export default {
       var files = e.target.files || e.dataTransfer.files;
       console.log(files)
       if (!files.length)
-        return;
+        return
       this.file = files[0]
     },
     uploadPhoto(file) {
@@ -26,14 +26,11 @@ export default {
       console.log(formData)
       this.$http.post('http://localhost:3000/photos/upload', formData)
       .then((response) => {
-        console.log('File sent...'); // this block is never triggered
-        console.log(response);
-      }, (response) => {
-        console.log('Error occurred...');
-      });
+        console.log(response)
+      })
     },
     removeImage: function (e) {
-      this.image = '';
+      this.image = ''
     }
   }
 }

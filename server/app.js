@@ -5,7 +5,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
-
+const cors = require('cors')
+ 
 mongoose.connect('mongodb://localhost/nandiraspatur', {useMongoClient: true})
 
 const photos = require('./routes/photos');
@@ -13,6 +14,7 @@ const users = require('./routes/users');
 
 const app = express();
 
+app.use(cors())
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

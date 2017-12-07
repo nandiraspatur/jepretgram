@@ -1,25 +1,31 @@
-const User = require('../models/userModel')
+const Photo = require('../models/photoModel')
 require('dotenv').config()
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
 module.exports = {
   getAll: (req, res) => {
-    User.find()
-    .then(users => {
-      res.send(users)
+    Photo.find()
+    .then(photos => {
+      res.send(photos)
     })
     .catch(err => {
       res.status(500).send({err : err})
     })
   },
-  upload: (req, res) => {
-    console.log(req.file)
+  create: (req, res) => {
+    Photo.create(req.body)
+    .then(photo => {
+      res.send(photo)
+    })
+    .catch(err => {
+      res.status(500).send({err: err})
+    })
   },
   update: (req, res) => {
-    User.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true })
-    .then(userUpdated => {
-      res.send(userUpdated)
+    Photo.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true })
+    .then(photoUpdated => {
+      res.send(photoUpdated)
     })
     .catch(err => {
       res.status(500).send({err: err})
@@ -27,8 +33,8 @@ module.exports = {
   },
   remove: (req, res) => {
     User.findByIdAndRemove(req.params.id)
-    .then(userDeleted => {
-      res.send({status: 'deleted', data: userDeleted})
+    .then(photoDeleted => {
+      res.send({status: 'deleted', data: photoDeleted})
     })
     .catch(err => {
       res.status(500).send({err: err})
