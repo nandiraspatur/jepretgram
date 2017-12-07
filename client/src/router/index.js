@@ -12,7 +12,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'MainPage',
       component: MainPage,
       children: [
         {

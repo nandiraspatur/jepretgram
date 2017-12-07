@@ -8,10 +8,13 @@
             <input type="text" placeholder="Caption" v-model="caption">
           </div>
           <div class="field">
-            <label>Select an image</label>
-            <input type="file" @change="onFileChange">
+            <img :src="imageSrc" class="image" style="max-width: 100px">
           </div>
-          <button class="ui primary button" @click="uploadPhoto">Submit</button>
+          <div class="field">
+            <label>Select an image</label>
+            <input @change="uploadImage" type="file" name="photo" accept="image/*">
+          </div>
+          <button class="ui primary button" @click="submitUpload">Submit</button>
         </div>
       </div>
     </div>
@@ -19,40 +22,46 @@
 </template>
 
 <script>
-/* eslint-disable */
 export default {
+  name: 'app',
   data () {
     return {
-      file: '',
-      caption: ''
+      caption: '',
+      imageSrc: 'http://nahmdong.com/vitalhill/img/default.png',
+      data: ''
     }
   },
   methods: {
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
+    uploadImage: function (e) {
+      var files = e.target.files
       console.log(files)
-      if (!files.length)
+      if (!files[0]) {
         return
-      this.file = files[0]
-    },
-    uploadPhoto(file) {
-      var formData = new FormData();
-      // formData.append('_token', this.token); // just the csrf token
-      formData.append('file', this.file);
-      formData.append('caption', this.caption);
+      }
+      var data = new FormData()
+      data.append('image', files[0])
+      data.append('caption', this.caption)
+      var reader = new FileReader()
+      reader.onload = (e) => {
+        this.imageSrc = e.target.result
+      }
+      reader.readAsDataURL(files[0])
 
-      this.$http.post('http://localhost:3000/photos/upload', {caption: this.caption}, {
+      this.data = data
+    },
+    submitUpload () {
+      this.$http.post('/photos/uploads', this.data, {
         headers: {
           accesstoken: localStorage.getItem('accesstoken')
+          // 'Content-Type': 'multipart/form-data'
         }
+      }).then(function (response) {
+        console.log('success')
+      }).catch(function (error) {
+        console.log(error) // catch your error
+        console.log(error.response)
       })
-      .then((response) => {
-        console.log(response)
-      })
-      .catch(err => console.log(err))
-    },
-    removeImage: function (e) {
-      this.image = ''
+      window.location.replace('/')
     }
   }
 }
