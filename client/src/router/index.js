@@ -23,7 +23,14 @@ export default new Router({
         {
           path: '/upload',
           name: 'UploadPhoto',
-          component: UploadPhoto
+          component: UploadPhoto,
+          beforeEnter: (to, from, next) => {
+            if (localStorage.getItem('accesstoken')) {
+              next()
+            } else {
+              next('/login')
+            }
+          }
         }
       ]
     },
