@@ -4,6 +4,7 @@
       <img src="../assets/img/sample.jpg" alt="photo" class="ui image">
       <div class="ui segment">
         <p>{{photo.caption}}</p>
+        <a href="#"><i class="heart icon"></i></a>
       </div>
     </div>
   </div>
