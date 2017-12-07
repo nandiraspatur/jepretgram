@@ -1,5 +1,5 @@
 <template>
-  <div class="ui grid centered">
+  <div class="ui grid centered stackable">
     <div class="five wide column center aligned">
       <div class="ui segment">
         <div class="ui header">
@@ -30,19 +30,24 @@
         <div class="ui segment">
         <div class="ui form">
           <div class="field">
-            <input type="text" placeholder="Username">
+            <label>Username</label>
+            <input type="text" placeholder="Username" v-model="formSignup.username">
           </div>
           <div class="field">
-            <input type="text" placeholder="Password">
+            <label>Password</label>
+            <input type="password" placeholder="Password" v-model="formSignup.password">
           </div>
           <div class="field">
-            <input type="text" placeholder="First Name">
+            <label>First Name</label>
+            <input type="text" placeholder="First Name" v-model="formSignup.first_name">
           </div>
           <div class="field">
-            <input type="text" placeholder="Last Name">
+            <label>Last Name</label>
+            <input type="text" placeholder="Last Name" v-model="formSignup.last_name">
           </div>
           <div class="field">
-            <input type="text" placeholder="Email">
+            <label>Email</label>
+            <input type="text" placeholder="Email" v-model="formSignup.email">
           </div>
         </div>
       </div>
@@ -51,7 +56,7 @@
         <div class="ui black deny button">
           Cancle
         </div>
-        <div class="ui positive right labeled icon button">
+        <div class="ui positive right labeled icon button" @click="signup">
           SignUp
           <i class="checkmark icon"></i>
         </div>
@@ -65,26 +70,42 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      formSignup: {
+        username: '',
+        password: '',
+        first_name: '',
+        last_name: '',
+        email: ''
+      }
     }
   },
   methods: {
     modalSignUp () {
+      // eslint-disable-next-line
       $('.tiny.modal')
         .modal('show')
     },
-    // login () {
-    //   let user = {
-    //     username: this.username,
-    //     password: this.password
-    //   }
-    //   this.$http.post('/users/login', user)
-    //   .then(({data}) => {
-    //     localStorage.setItem('accesstoken', data.accesstoken)
-    //     console.log(localStorage)
-    //   })
-    //   .catch(err => console.log(err))
-    // }
+    login () {
+      let user = {
+        username: this.username,
+        password: this.password
+      }
+      this.$http.post('/users/login', user)
+      .then(({data}) => {
+        localStorage.setItem('accesstoken', data.accesstoken)
+        console.log(localStorage)
+        this.$router.push('/')
+      })
+      .catch(err => console.log(err))
+    },
+    signup () {
+      this.$http.post('/users/signup', this.formSignup)
+      .then(({data}) => {
+        console.log('signup succes!!')
+      })
+      .catch(err => console.log(err))
+    }
   }
 }
 </script>

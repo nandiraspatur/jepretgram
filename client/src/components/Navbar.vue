@@ -1,13 +1,25 @@
 <template>
   <div class="ui stackable container menu">
     <a class="item">Home</a>
-    <a class="item">Upload</a>
-    <router-link to="/login" class="right item">Login</router-link>
+    <a class="item" v-if="isLogin">Upload</a>
+    <a @click="logout" class="right item" v-if="isLogin">Logout</a>
+    <router-link to="/login" class="right item" v-else>Login</router-link>
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      isLogin: localStorage.getItem('accesstoken')
+    }
+  },
+  methods: {
+    logout () {
+      localStorage.clear()
+      window.location.reload()
+    }
+  }
 
 }
 </script>
