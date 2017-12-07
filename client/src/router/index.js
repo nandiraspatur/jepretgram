@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import MainPage from '@/components/MainPage'
 import UploadPhoto from '@/components/UploadPhoto'
 import Login from '@/components/Login'
+import PhotoContent from '@/components/PhotoContent'
 
 Vue.use(Router)
 
@@ -14,6 +15,11 @@ export default new Router({
       name: 'MainPage',
       component: MainPage,
       children: [
+        {
+          path: '',
+          name: 'PhotoContent',
+          component: PhotoContent
+        },
         {
           path: '/upload',
           name: 'UploadPhoto',

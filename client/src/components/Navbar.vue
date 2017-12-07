@@ -1,7 +1,7 @@
 <template>
   <div class="ui stackable container menu">
-    <a class="item">Home</a>
-    <a class="item" v-if="isLogin">Upload</a>
+    <router-link to="/" class="item">Home</router-link>
+    <router-link to="/upload" class="item" v-if="isLogin">Upload</router-link>
     <a @click="logout" class="right item" v-if="isLogin">Logout</a>
     <router-link to="/login" class="right item" v-else>Login</router-link>
   </div>

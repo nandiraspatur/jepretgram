@@ -14,6 +14,10 @@ module.exports = {
     })
   },
   create: (req, res) => {
+    req.body.userId = req.userLogin.id
+    if  (!req.body.imageUrl) {
+      req.body.imageUrl = '../assets/img/sample.jpg'
+    }
     Photo.create(req.body)
     .then(photo => {
       res.send(photo)

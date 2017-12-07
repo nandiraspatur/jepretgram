@@ -1,8 +1,20 @@
 <template>
-  <div v-if="!image">
-    <h2>Select an image</h2>
-    <input type="file" @change="onFileChange">
-    <button @click="uploadPhoto">submit</button>
+  <div class="ui grid centered">
+    <div class="five wide column center aligned">
+      <div class="ui segment">
+        <div class="ui form">
+          <div class="field">
+            <label>Caption</label>
+            <input type="text" placeholder="Caption">
+          </div>
+          <div class="field">
+            <label>Select an image</label>
+            <input type="file" @change="onFileChange">
+          </div>
+          <button class="ui primary button" @click="uploadPhoto">Submit</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
