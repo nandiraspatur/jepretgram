@@ -6,8 +6,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const cors = require('cors')
- 
-mongoose.connect('mongodb://localhost/nandiraspatur', {useMongoClient: true})
+require('dotenv').config()
+
+mongoose.connect(process.env.MONGO_ATLAS, {useMongoClient: true})
 
 const photos = require('./routes/photos');
 const users = require('./routes/users');
